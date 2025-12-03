@@ -1,6 +1,6 @@
 {
     "name": "@utilisimo/nest",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "NestJS library providing essential utilities and helpers for streamlined application setup and configuration.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

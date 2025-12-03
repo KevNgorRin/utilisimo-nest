@@ -3,26 +3,43 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 interface CustomSwaggerOptions {
     nodeEnv?: string
-    title: string
-    description: string
-    version: string
+    title?: string
+    description?: string
+    version?: string
+    apiUrl?: string
 }
 
 export class CustomSwaggerModule {
     private isBuilt = false
+    private nodeEnv?: string
+    private title?: string
+    private description?: string
+    private version?: string
+    private apiUrl?: string
 
-    build(
-        app: INestApplication,
-        { nodeEnv, title, description, version }: CustomSwaggerOptions,
-    ) {
-        if (!nodeEnv || nodeEnv.startsWith('prod')) {
+    constructor({
+        nodeEnv,
+        title,
+        description,
+        version,
+        apiUrl,
+    }: CustomSwaggerOptions) {
+        this.nodeEnv = nodeEnv
+        this.title = title
+        this.description = description
+        this.version = version
+        this.apiUrl = apiUrl
+    }
+
+    build(app: INestApplication) {
+        if (!this.nodeEnv || this.nodeEnv.startsWith('prod')) {
             return
         }
 
         const options = new DocumentBuilder()
-            .setTitle(title)
-            .setDescription(description)
-            .setVersion(version)
+            .setTitle(this.title || 'API Documentation')
+            .setDescription(this.description || 'Here goes the API description')
+            .setVersion(this.version || '1.0')
             .addBearerAuth()
             .build()
         const document = SwaggerModule.createDocument(app, options)
@@ -54,9 +71,9 @@ export class CustomSwaggerModule {
         this.isBuilt = true
     }
 
-    log(logger: Logger, apiUrl: string) {
-        if (this.isBuilt) {
-            logger.log(`📖 Documentation: \x1b[36m${apiUrl}/docs\x1b[0m`)
+    log(logger: Logger) {
+        if (this.isBuilt && this.apiUrl) {
+            logger.log(`📖 Documentation: \x1b[36m${this.apiUrl}/docs\x1b[0m`)
         }
     }
 }
