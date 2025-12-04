@@ -1,6 +1,6 @@
 {
     "name": "@utilisimo/nest",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "NestJS library providing essential utilities and helpers for streamlined application setup and configuration.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -40,13 +40,15 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@nestjs/common": "^11.0.0",
+        "@nestjs/common": "^11.0.12",
         "@nestjs/config": "^4.0.2",
-        "@nestjs/core": "^11.0.0",
+        "@nestjs/core": "^11.0.12",
         "@nestjs/swagger": "^11.1.0",
         "@nestjs/typeorm": "^11.0.0",
-        "class-validator": "^0.14.3",
         "typeorm": "^0.3.27"
+    },
+    "peerDependencies": {
+        "class-validator": "^0.14.3"
     },
     "devDependencies": {
         "@nestjs/cli": "^11.0.5",
